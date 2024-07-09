@@ -1,0 +1,33 @@
+
+.container{
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 50px;
+
+    padding: 0 20px;
+
+    background-color: teal;
+}
+
+.name_input_block{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .name_input{
+        width: 100%;
+        max-width: 500px;
+
+        padding: 10px;
+    }
+
+    .join_btn{
+        padding: 10px;
+        background-color: white;
+    }
+}
