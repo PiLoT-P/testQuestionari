@@ -1,4 +1,5 @@
 import { IUser } from "@src/lib/interfaces/interfaces";
+import s from './UserListAdmin.module.scss';
 
 interface UsetListAdminProps{
     dataList: IUser[];
@@ -8,24 +9,24 @@ const UsetListAdmin = ({
     dataList,
 }: UsetListAdminProps) => {
     return (
-        <section>
-            <h4>Списк Учасників</h4>
-            <ul>
+        <div className={s.container}>
+            <h4 className={s.title}>Список учасників ( готово до опитування {dataList.length} )</h4>
+            <ul className={s.users_list}>
                 {dataList.map((user, index) => {
                     if(user.name === 'admin') return
                     return ( 
                         <li
                             key={index}
+                            className={s.item}
                         >
-                            <p>Ім'я: {user.name}</p>
-                            <p>Рахунок: {user.score}</p>
-                            <p>Його відповідь: {user.answer}</p>
-                            <br />
+                            <p>Ім'я:  <span className={s.current_text}>{user.name}</span></p>
+                            <p>Рахунок:  <span className={s.current_text}>{user.score}</span></p>
+                            <p>Його відповідь:  <span className={s.current_text}>{user.answer ? user.answer : '-'}</span></p>
                         </li>
                     )
                 })}
             </ul>
-        </section>
+        </div>
     );
 }
 

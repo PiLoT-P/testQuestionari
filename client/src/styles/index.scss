@@ -1,3 +1,71 @@
+@import './vars';
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../assets/fonts/Montserrat-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+
 * {
   padding: 0px;
   margin: 0px;
@@ -22,9 +90,14 @@ body {
 }
 
 body {
-  color: #000000;
+  color: $TextcolorMain;
+  background-color: $mainBackgroundColor;
+
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
   line-height: 1;
   font-size: 1rem;
+
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -36,12 +109,25 @@ input,
 button,
 textarea {
   font-size: inherit;
+
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
 }
 
 button {
+  padding: 10px;
+
+  color: $TextcolorMain;
+  background-color: white;
+  border-radius: 10px;
+
   cursor: pointer;
-  color: inherit;
-  background-color: inherit;
+  transition: color 0.3s ease, background-color 0.3s ease;
+
+  &:hover{
+    background-color: $TextcolorMain;
+    color: white;
+  }
 }
 
 a {

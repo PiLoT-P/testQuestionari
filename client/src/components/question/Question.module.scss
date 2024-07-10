@@ -1,1 +1,70 @@
+@import '../../styles/vars';
 
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.title_block{
+    padding: 20px;
+
+    border-radius: 10px;
+    background-color: white;
+
+    .title{
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .question{
+        text-align: center;
+    }
+}
+
+.time_block{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    
+    .time{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 40px;
+        height: 40px;
+        padding: 10px;
+
+        border-radius: 50%;
+        background-color: rgba($color: $colorGreenIconSVG, $alpha: 0.7);
+        color: white;
+    }
+}
+
+.answer_list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+
+    .item{
+        padding: 10px;
+        width: calc((100% - 30px) / 2);
+
+        .answer_btn{
+            width: 100%;
+        }
+
+        .selected_btn{
+            background-color: rgba($color: #000000, $alpha: 0.2);
+            color: rgba($color: white, $alpha: 0.5);
+            cursor: auto;
+
+            &:hover{
+                background-color: rgba($color: #000000, $alpha: 0.2);
+                color: rgba($color: white, $alpha: 0.5);
+            }
+        }
+    }
+}

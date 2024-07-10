@@ -1,0 +1,24 @@
+@import '../../styles/vars';
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.loader{
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    border: 7px solid rgba(0, 0, 0, 0.1);
+    border-left-color: $TextcolorMain;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+}

@@ -1,0 +1,9 @@
+@import '../../styles/vars';
+
+.container{
+    padding: 20px;
+    border-radius: 10px;
+    background-color: $colorWhite;
+
+    box-shadow: $boxShadowOne;
+}

@@ -1,0 +1,21 @@
+@import '../../styles/vars';
+
+
+.title{
+    margin-bottom: 30px;
+}
+
+.table_container{
+    padding: 5px;
+    background-color: $colorWhite;
+}
+
+.head_block{
+    background-color: $colorOne;
+    padding: 7px 8px;
+}
+
+.body_block{
+    padding: 7px 0px;
+    text-align: center;
+}
