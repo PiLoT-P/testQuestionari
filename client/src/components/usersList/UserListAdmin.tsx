@@ -10,7 +10,8 @@ const UsetListAdmin = ({
 }: UsetListAdminProps) => {
     return (
         <div className={s.container}>
-            <h4 className={s.title}>Список учасників ( готово до опитування {dataList.length} )</h4>
+            <h4 className={s.title}>Список учасників</h4>
+            <h4 className={s.title} style={{marginBottom: '15px'}}>( готово до опитування {dataList.length} )</h4>
             <ul className={s.users_list}>
                 {dataList.map((user, index) => {
                     if(user.name === 'admin') return

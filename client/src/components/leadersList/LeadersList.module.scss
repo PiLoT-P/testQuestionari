@@ -1,0 +1,49 @@
+@import '../../styles/vars';
+
+.container{
+    background-color: $colorWhite;
+    color: $bgColorSecond;
+}
+
+.logo_block{
+    padding: 15px 0px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    max-width: 240px;   
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    background-color: $colorWhite;
+}
+
+.title{
+    margin-bottom: 30px;
+}
+
+.leaders_list {
+    list-style: none;
+    padding: 0;
+
+    .item{
+        margin: 15px 0;
+        padding: 10px;
+
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+
+        font-size: 24px;
+        .icon{
+            fill: white;
+        }
+    }
+
+}

@@ -5,13 +5,13 @@
     padding: 20px;
     border-radius: 10px;
     background-color: $colorWhite;
-
-    box-shadow: $boxShadowOne;
 }
 
 .title{
-    margin-bottom: 20px;
-    
+    margin-bottom: 3px;
+    color: $bgColorSecond;
+
+    text-align: center;
 }
 
 .users_list{
@@ -27,9 +27,13 @@
         flex-direction: column;
         gap: 6px;
 
-        background-color: $colorOne;
+        background-color: $bgColorSecond;
         padding: 10px;
         border-radius: 10px;
+
+        @include mobile{
+            width: 100%;
+        }
         
         .current_text{
             display: inline-block;
@@ -38,9 +42,10 @@
             border-radius: 5px;
 
             min-width: 20px;
+            font-weight: 600;
 
-            background-color: $TextcolorMain;
-            color: $colorWhite;
+            background-color: $colorWhite;
+            color: $bgColorSecond;
 
             text-align: center;
         }

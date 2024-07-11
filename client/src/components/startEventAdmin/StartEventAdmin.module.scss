@@ -10,23 +10,27 @@
 
     border-radius: 10px;
     background-color: $colorWhite;
+}
 
-    box-shadow: $boxShadowOne;
+.title{
+    margin-bottom: 25px;
+    text-align: center;
+    color: $bgColorSecond;
 }
 
 .start_event_btn{
     padding: 10px;
 
-    background-color: $colorOne;
+    background-color: $bgColorSecond;
 }
 
 .disablet_btn{
-    background-color: rgba($color: #000000, $alpha: 0.2);
-    color: rgba($color: white, $alpha: 0.5);
+    background-color: rgba($color: $bgColorSecond, $alpha: 0.3);
+    color: rgba($color: white, $alpha: 0.3);
     cursor: auto;
 
     &:hover{
-        background-color: rgba($color: #000000, $alpha: 0.2);
-        color: rgba($color: white, $alpha: 0.5);
+        background-color: rgba($color: $bgColorSecond, $alpha: 0.3);
+        color: rgba($color: white, $alpha: 0.3);
     }
 }

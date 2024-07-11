@@ -1,4 +1,4 @@
-
+@import '../../styles/vars';
 
 .container{
     height: 100vh;
@@ -11,6 +11,18 @@
     gap: 50px;
 
     padding: 40px 20px;
+}
+
+.logo_block{
+    padding: 15px 10px;
+    max-width: 240px;   
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    background-color: $colorWhite;
 }
 
 .title_text{

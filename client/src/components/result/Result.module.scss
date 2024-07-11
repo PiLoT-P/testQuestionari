@@ -2,20 +2,25 @@
 
 
 .title{
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .table_container{
     padding: 5px;
+
+    color: $bgColorSecond;
+    border-radius: 5px;
     background-color: $colorWhite;
 }
 
 .head_block{
-    background-color: $colorOne;
+    background-color: $bgColorFour;
     padding: 7px 8px;
 }
 
 .body_block{
     padding: 7px 0px;
     text-align: center;
+    font-weight: 600;
 }

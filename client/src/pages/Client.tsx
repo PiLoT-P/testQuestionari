@@ -1,9 +1,11 @@
 import Loader from "@src/components/loader/Loader";
+import PlayerInfo from "@src/components/playerInfo/PlayerInfo";
 import Question from "@src/components/question/Question";
 import Result from "@src/components/result/Result";
 import { IUser } from "@src/lib/interfaces/interfaces";
 import socket from "@src/socket";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Client = () => {
     const [currentQuestion, setCurrentQuestion] = useState('');
@@ -13,6 +15,9 @@ const Client = () => {
     const [leaders, setLeader] = useState<IUser[]>([]);
     const [seconds, setSeconds] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState<string>('');
+    const [infoUser, setInfoUser] = useState<IUser | null>(null);
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         socket.on('newQuestion', (question) => {
@@ -24,16 +29,27 @@ const Client = () => {
             setSeconds(30);
         });
     
-        socket.on('endQuiz', (leaders) => {
+        socket.on('endQuiz', (leaderboard) => {
             setShowResult(true);
-            setLeader(leaders);
+            setLeader(leaderboard);
             setSelectedAnswer('');
             setQuizStarted(false);
+            socket.emit('requestUserStats', socket.id);
         });
     
+        socket.on('resetQuiz', () => {
+            navigate('/')
+        })
+
+        socket.on('userStats', (user) => {
+            setInfoUser(user);
+        })
+
         return () => {
             socket.off('newQuestion');
             socket.off('endQuiz');
+            socket.off('resetQuiz');
+            socket.off('userStats');
         };
     }, []);
 
@@ -69,10 +85,12 @@ const Client = () => {
         <section
             style={{
                 display: 'flex',
+                flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: '100vh',
                 width: '100%',
+                padding: '0px 15px',
             }}
         >
             {(!quizStarted && !showResult) && (
@@ -87,10 +105,15 @@ const Client = () => {
                     selectedAnswer={selectedAnswer}
                 />
             )}
-            {showResult &&
-                <Result
-                    data={leaders}
-                />
+            {(showResult && infoUser) &&
+                <>
+                    <PlayerInfo
+                        user={infoUser}
+                    />
+                    <Result
+                        data={leaders}
+                    />
+                </>
             }
         </section>
     );

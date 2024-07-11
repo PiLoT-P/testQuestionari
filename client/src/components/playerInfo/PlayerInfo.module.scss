@@ -1,0 +1,25 @@
+@import '../../styles/vars';
+
+.container{
+    margin-bottom: 40px;
+}
+
+.title{
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.info_block{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    border-radius: 10px;
+    background-color: $bgColorSecond;
+}
+
+.info{
+    font-size: 18px;
+    font-weight: 600;
+}

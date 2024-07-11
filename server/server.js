@@ -25,7 +25,28 @@ const questions = [
     options: ['Марс', 'Юпітер', 'Земля', 'Венера'],
     correctAnswer: 'Юпітер',
   },
+  {
+    question: 'Хто є автором роману "Війна і мир"?',
+    options: ['Лев Толстой', 'Федір Достоєвський', 'Олександр Пушкін', 'Михайло Булгаков'],
+    correctAnswer: 'Лев Толстой',
+  },
+  {
+    question: 'Яке море найбільше за площею?',
+    options: ['Чорне море', 'Середземне море', 'Карибське море', 'Каспійське море'],
+    correctAnswer: 'Каспійське море',
+  },
+  {
+    question: 'Яка країна першою здійснила посадку людини на Місяць?',
+    options: ['США', 'Росія', 'Китай', 'Індія'],
+    correctAnswer: 'США',
+  },
+  {
+    question: 'Який хімічний елемент має символ "O"?',
+    options: ['Кисень', 'Водень', 'Азот', 'Вуглець'],
+    correctAnswer: 'Кисень',
+  },
 ];
+
 
 let users = [];
 let currentQuestionIndex = -1;
@@ -74,6 +95,13 @@ function checkAnswers() {
   nextQuestion();
 }
 
+function resetQuiz() {
+  users = [];
+  currentQuestionIndex = -1;
+  leaderboard = [];
+  io.emit('resetQuiz');
+}
+
 io.on('connection', (socket) => {
 
   socket.on('join', (name) => {
@@ -110,15 +138,34 @@ io.on('connection', (socket) => {
 
     const allAnswered = users.every(user => user.answer !== undefined);
     if (allAnswered) {
-      
       checkAnswers();
     }
+  });
+
+  socket.on('resetQuiz', () => {
+    resetQuiz();
   });
 
   socket.on('disconnect', () => {
     users = users.filter(user => user.id !== socket.id);
     io.emit('userList', users);
     saveUsers();
+  });
+
+  socket.on('requestTop5', () => {
+    leaderboard = [...users];
+    leaderboard.sort((a, b) => b.score - a.score).slice(0, 5);
+
+    io.emit('top5', leaderboard);
+  })
+
+  socket.on('requestUserStats', (userId) => {
+    const user = users.find(user => user.id === userId);
+    if (user) {
+      socket.emit('userStats', user);
+    } else {
+      socket.emit('userStats', { error: 'User not found' });
+    }
   });
 
 });

@@ -90,8 +90,8 @@ body {
 }
 
 body {
-  color: $TextcolorMain;
-  background-color: $mainBackgroundColor;
+  color: $colorWhite;
+  background-color: $bgColor;
 
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
@@ -117,16 +117,15 @@ textarea {
 button {
   padding: 10px;
 
-  color: $TextcolorMain;
-  background-color: white;
+  color: $colorWhite;
+  background-color: $bgColorSix;
   border-radius: 10px;
 
   cursor: pointer;
-  transition: color 0.3s ease, background-color 0.3s ease;
+  transition: background-color 0.3s ease;
 
   &:hover{
-    background-color: $TextcolorMain;
-    color: white;
+    background-color: #27435a;
   }
 }
 
@@ -154,11 +153,3 @@ img {
   vertical-align: top;
 }
 
-.global-container{
-  height: 100vh;
-  width: 100vw;
-
-  padding: 0 20px;
-
-  background-color: teal;
-}

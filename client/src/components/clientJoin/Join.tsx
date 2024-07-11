@@ -24,7 +24,9 @@ const Join = () => {
 
     return (
         <section className={s.container}>
-            <img className={s.logo_image} width={200} src={logoSrc} alt="Logo" />
+            <div className={s.logo_block}>
+                <img className={s.logo_image} width={200} src={logoSrc} alt="Logo" />
+            </div>
             <p className={s.title_text}>Для проходження вікторини прошу ввести ім'я і привізвище</p>
             <form 
                 className={s.name_input_block}

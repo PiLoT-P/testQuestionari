@@ -8,11 +8,17 @@ interface StartEventAdminProps{
 const StartEventAdmin = ({
     isDisabled,
 }: StartEventAdminProps) => {
+
     const handleStartEvent = () => {
         socket.emit('startQuiz');
     };
 
-        console.log('test', isDisabled)
+    const handleResetEvent = () => {
+        socket.emit('resetQuiz');
+        window.location.reload();
+    }
+
+    console.log('test', isDisabled)
     return ( 
         <div className={s.container}>
             <h4 className={s.title}>Для того, щоб розпочати опитування натисніть цю кнопку</h4>
@@ -23,6 +29,13 @@ const StartEventAdmin = ({
                 disabled={isDisabled}
             >
                 Розпочати опитування
+            </button>
+            <br />
+            <button
+                onClick={handleResetEvent}
+                className={s.reset_btn}
+            >
+                Скинути все, для перезапуску
             </button>
         </div>
     );
