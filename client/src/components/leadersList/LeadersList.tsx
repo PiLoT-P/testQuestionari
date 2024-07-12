@@ -26,11 +26,11 @@ const LeadersList = ({
         const crown = crowns[index];
         if (index < 3) {
           return (
-            <g transform={`translate(${x-25},${y + 30})`}>  
+            <g transform={`translate(${x-25},${y + 35})`}>  
               <svg width={50} height={50}>
                 <use xlinkHref={`${svg}#icon-medal-${crown}`} />
               </svg>
-              <text x={25} y={-5 } textAnchor="middle" fill="#3E5871" fontSize="28px" fontWeight="700">
+              <text x={25} y={-10 } textAnchor="middle" fill="#3E5871" fontSize="28px" fontWeight="700">
                 {payload.value}
               </text>
             </g>

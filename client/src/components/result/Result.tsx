@@ -1,9 +1,7 @@
 import s from './Result.module.scss'
 import { IUser } from '@src/lib/interfaces/interfaces';
-import gold from '@src/assets/images/medal-gold.png'
-import silver from '@src/assets/images/medal-silver.png'
-import bronze from '@src/assets/images/medal-bronze.png'
-
+import svg from '@src/assets/icons/symbol-defs.svg'
+;
 interface ResultProps{
     data: IUser[];
 }
@@ -20,16 +18,11 @@ const Result = ({
         }
     };
 
-    const imagesMeDal = (index: number) => {
-        if(index < 3) {
-            switch(index) {
-                case 0: return gold;
-                case 1: return silver;
-                case 2: return bronze;
-                default: return '';
-            }
-        }
-    }  
+    const crowns = [
+        "gold", 
+        "silver", 
+        "bronze",
+    ]; 
 
     return (
         <div className={s.container}>
@@ -58,7 +51,9 @@ const Result = ({
                                     }}
                                 >
                                     {(index < 3) &&
-                                        <img height={20} width={20} src={imagesMeDal(index)} alt="medal" />
+                                        <svg width={20} height={20}>
+                                            <use xlinkHref={`${svg}#icon-medal-${crowns[index]}`} />
+                                        </svg>
                                     }
                                     <p
                                         style={{
