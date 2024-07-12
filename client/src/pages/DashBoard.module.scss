@@ -1,0 +1,64 @@
+@import '../styles/vars';
+
+.container{
+    padding: 40px 0px;
+    padding-top: 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.box_text{
+    display: flex;
+}
+
+.logo_block{
+    padding: 15px 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    max-width: 240px;   
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    background-color: white;
+
+    position: fixed;
+    top: 10px;
+    left: 10px;
+}
+
+.title{
+    padding-left: 30px;
+    text-align: center;
+    color: $bgColorSecond;
+    font-size: 35px;
+}
+
+.leaders_list {
+    list-style: none;
+    padding: 0;
+
+    .item{
+        margin: 15px 0;
+        padding: 10px;
+
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #D9D9DA;
+
+        font-size: 24px;
+        .icon{
+            fill: white;
+        }
+    }
+
+}

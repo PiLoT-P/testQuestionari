@@ -1,10 +1,10 @@
-import QuestionAdmin from "@src/components/questionAdmin/QuestionAdmin";
-import Result from "@src/components/result/Result";
-import StartEventAdmin from "@src/components/startEventAdmin/StartEventAdmin";
-import UsetListAdmin from "@src/components/usersList/UserListAdmin";
-import { IUser } from "@src/lib/interfaces/interfaces";
-import socket from "@src/socket";
-import { useEffect, useState } from "react";
+import QuestionAdmin from "@src/components/questionAdmin/QuestionAdmin"
+import Result from "@src/components/result/Result"
+import StartEventAdmin from "@src/components/startEventAdmin/StartEventAdmin"
+import UsetListAdmin from "@src/components/usersList/UserListAdmin"
+import { IUser } from "@src/lib/interfaces/interfaces"
+import socket from "@src/socket"
+import { useEffect, useState } from "react"
 
 const Admin = () => {
     const [users, setUsers] = useState<IUser[]>([]);

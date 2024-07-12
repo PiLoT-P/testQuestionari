@@ -27,7 +27,7 @@ const Join = () => {
             <div className={s.logo_block}>
                 <img className={s.logo_image} width={200} src={logoSrc} alt="Logo" />
             </div>
-            <p className={s.title_text}>Для проходження вікторини прошу ввести ім'я і привізвище</p>
+            <p className={s.title_text}>Для проходження вікторини введіть ім'я та прізвище</p>
             <form 
                 className={s.name_input_block}
                 onSubmit={handleJoin}
