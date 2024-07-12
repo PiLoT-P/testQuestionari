@@ -1,0 +1,14 @@
+services:
+  api:
+    build:
+      context: ../server
+      dockerfile: ../docker/build/api.dockerfile
+    ports:
+      - "4000:4000"
+    
+  client:
+    build:
+      context: ../client
+      dockerfile: ../docker/build/client.dockerfile
+    ports:
+      - "8080:8080"
