@@ -85,7 +85,10 @@ function checkAnswers() {
     if (user.answer === correctAnswer) {
       user.score++;
     } else if (user.answer.length < 1) {
+      user.notCorrect++;
       user.answer = 'wrong';
+    }else {
+      user.notCorrect++;
     }
   });
 
@@ -107,7 +110,12 @@ io.on('connection', (socket) => {
   socket.on('join', (name) => {
     const existingUser = users.find(user => user.name === name);
     if (!existingUser) {
-      users.push({ id: socket.id, name, score: 0, answer: undefined});
+      users.push({ 
+        id: socket.id, 
+        name, score: 0, 
+        notCorrect: 0 , 
+        answer: undefined,
+      });
       io.emit('userList', users);
       saveUsers();
     }

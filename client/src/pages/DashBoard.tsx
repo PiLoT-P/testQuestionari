@@ -47,6 +47,8 @@ const DashBoard = () => {
                 alignItems: 'center',
                 height: '100vh',
                 width: '100%',
+                backgroundColor: "#E6E9EF",
+                color: '#3E5871',
             }}
         >
             {!quizStarted ?

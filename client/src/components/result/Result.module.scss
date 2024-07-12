@@ -7,11 +7,17 @@
 }
 
 .table_container{
-    padding: 5px;
+    border-collapse: collapse;
+    padding: 10px;
 
     color: $bgColorSecond;
     border-radius: 5px;
     background-color: $colorWhite;
+}
+
+.head_line{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .head_block{
@@ -23,4 +29,5 @@
     padding: 7px 0px;
     text-align: center;
     font-weight: 600;
+
 }

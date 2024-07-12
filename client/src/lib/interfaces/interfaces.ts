@@ -4,6 +4,7 @@ export interface IUser {
     id: string;
     name: string;
     score: number;
+    notCorrect: number;
     answer: string | undefined;
 }
 
