@@ -1,5 +1,4 @@
 import logoSrc from '@src/assets/bertaLogoForTest.png'
-import svg from '@src/assets/icons/symbol-defs.svg'
 import { IUser } from '@src/lib/interfaces/interfaces'
 import {
   Bar,
@@ -19,46 +18,8 @@ interface LeadersListProps {
 }
 
 const LeadersList = ({ dataList, isEnd }: LeadersListProps) => {
-  console.log('testData', dataList)
-  const crowns = ['gold', 'silver', 'bronze']
+  console.log('testData', dataList);
 
-  const renderCustomizedTick = (tickProps: any) => {
-    const { x, y, payload, index } = tickProps
-    const crown = crowns[index]
-    if (index < 3) {
-      return (
-        <g transform={`translate(${x - 25},${y + 35})`}>
-          <svg width={50} height={50}>
-            <use xlinkHref={`${svg}#icon-medal-${crown}`} />
-          </svg>
-          <text
-            x={25}
-            y={-10}
-            textAnchor='middle'
-            fill='#3E5871'
-            fontSize='28px'
-            fontWeight='700'
-          >
-            {payload.value}
-          </text>
-        </g>
-      )
-    }
-    return (
-      <g transform={`translate(${x},${y})`}>
-        <text
-          x={0}
-          y={30}
-          textAnchor='middle'
-          fill='#3E5871'
-          fontSize='28px'
-          fontWeight='700'
-        >
-          {payload.value}
-        </text>
-      </g>
-    )
-  }
   return (
     <div className={s.container}>
       <div className={s.logo_block}>
@@ -78,7 +39,7 @@ const LeadersList = ({ dataList, isEnd }: LeadersListProps) => {
         layout='vertical'
         margin={{
           right: 45,
-          left: 25,
+          left: 125,
           bottom: 25,
         }}
       >

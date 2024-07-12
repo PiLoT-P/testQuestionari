@@ -50,58 +50,59 @@ const questions = [
 
 
 let users = [];
-let currentQuestionIndex = -1;
 let leaderboard = [];
 
 function saveUsers() {
   fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2), 'utf8');
 }
 
-function endQuiz() {
-  leaderboard = [...users];
-  leaderboard.sort((a, b) => b.score - a.score);
-  io.emit('endQuiz', leaderboard);
-  currentQuestionIndex = -1;
-  users.forEach(user => user.answer = undefined);
+function endQuizForUser(userId) {
+  const user = users.find(user => user.id === userId);
+  if (user) {
+    user.finished = true;
+    io.to(userId).emit('endQuiz', user);
+  }
+  io.emit('userList', users.sort((a, b) => b.score - a.score));
 }
 
-function nextQuestion() {
-  currentQuestionIndex++;
-  if (currentQuestionIndex < questions.length) {
-    const question = questions[currentQuestionIndex];
-    io.emit('newQuestion', question);
-  } else {
-    endQuiz();
+function sendNextQuestion(userId) {
+  console.log('next Question', userId, users)
+  const user = users.find(user => user.id === userId);
+
+  if (user) {
+    user.currentQuestionIndex++;
+    console.log('знайшов')
+    if (user.currentQuestionIndex < questions.length) {
+      const question = questions[user.currentQuestionIndex];
+      io.to(userId).emit('newQuestion', question);
+    } else {
+      endQuizForUser(userId);
+    }
   }
 }
 
-function checkAnswers() {
-  if(currentQuestionIndex === -1){
-    return;
-  }
-  const question = questions[currentQuestionIndex];
-  const correctAnswer = question.correctAnswer;
-
-  users.forEach(user => {
-    if (user.answer === correctAnswer) {
+function checkAnswer(userId, answer) {
+  const user = users.find(user => user.id === userId);
+  if (user) {
+    const question = questions[user.currentQuestionIndex];
+    if (answer === question.correctAnswer) {
       user.score++;
-    } else if (user.answer.length < 1) {
+    } else if (answer.length < 1) {
       user.notCorrect++;
-      user.answer = 'wrong';
-    }else {
+      answer = 'wrong';
+    } else {
       user.notCorrect++;
     }
-  });
 
-  io.emit('userList', users);
-
-  users.forEach(user => user.answer = undefined);
-  nextQuestion();
+    user.answer = answer;
+    io.emit('userList', users);
+    user.answer = undefined;
+    sendNextQuestion(userId);
+  }
 }
 
 function resetQuiz() {
   users = [];
-  currentQuestionIndex = -1;
   leaderboard = [];
   io.emit('resetQuiz');
 }
@@ -113,9 +114,12 @@ io.on('connection', (socket) => {
     if (!existingUser) {
       users.push({ 
         id: socket.id, 
-        name, score: 0, 
-        notCorrect: 0 , 
+        name, 
+        score: 0, 
+        notCorrect: 0, 
         answer: undefined,
+        currentQuestionIndex: -1,
+        finished: false
       });
       io.emit('userList', users);
       saveUsers();
@@ -128,27 +132,22 @@ io.on('connection', (socket) => {
   });
 
   socket.on('startQuiz', () => {
-    currentQuestionIndex = -1;
-    users.forEach(user => user.score = 0);
-    nextQuestion();
+    console.log('start', users.length)
+    users.forEach(user => {
+      user.currentQuestionIndex = -1;
+      user.score = 0;
+      user.notCorrect = 0;
+      console.log('user', user.name)
+      sendNextQuestion(user.id);
+    });
   });
 
   socket.on('answer', (data) => {
-    const {answer, userId} = data;
+    const { answer, userId } = data;
 
     console.log('Answer received from user:', userId, 'Answer:', answer);
 
-    const userIndex = users.findIndex(user => user.id === userId);
-    if (userIndex !== -1) {
-      users[userIndex].answer = answer;
-    } else {
-      console.log('User not found:', userId);
-    }
-
-    const allAnswered = users.every(user => user.answer !== undefined);
-    if (allAnswered) {
-      checkAnswers();
-    }
+    checkAnswer(userId, answer);
   });
 
   socket.on('resetQuiz', () => {

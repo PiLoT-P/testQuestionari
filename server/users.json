@@ -1,8 +1,10 @@
 [
   {
-    "id": "3JImGCqrAB0490M-AAAD",
-    "name": "asd",
+    "id": "EJLPdjYfbGc0Ok7oAAAR",
+    "name": "олександр Михайлович",
     "score": 0,
-    "notCorrect": 0
+    "notCorrect": 0,
+    "currentQuestionIndex": -1,
+    "finished": false
   }
 ]

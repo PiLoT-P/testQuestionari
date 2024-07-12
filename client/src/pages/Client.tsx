@@ -1,57 +1,58 @@
-import Loader from "@src/components/loader/Loader"
-import PlayerInfo from "@src/components/playerInfo/PlayerInfo"
-import Question from "@src/components/question/Question"
-import Result from "@src/components/result/Result"
-import { IUser } from "@src/lib/interfaces/interfaces"
-import socket from "@src/socket"
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import Loader from "@src/components/loader/Loader";
+import PlayerInfo from "@src/components/playerInfo/PlayerInfo";
+import Question from "@src/components/question/Question";
+import Result from "@src/components/result/Result";
+import { IUser } from "@src/lib/interfaces/interfaces";
+import socket from "@src/socket";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Client = () => {
     const [currentQuestion, setCurrentQuestion] = useState('');
     const [currentOptions, setCurrentOptions] = useState<string[]>([]);
     const [showResult, setShowResult] = useState(false);
     const [quizStarted, setQuizStarted] = useState(false);
-    const [leaders, setLeader] = useState<IUser[]>([]);
+    const [leaders, setLeaders] = useState<IUser[]>([]);
     const [seconds, setSeconds] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState<string>('');
     const [infoUser, setInfoUser] = useState<IUser | null>(null);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     useEffect(() => {
         socket.on('newQuestion', (question) => {
+            console.log('question', question);
             setCurrentQuestion(question.question);
             setCurrentOptions(question.options);
             setShowResult(false);
             setQuizStarted(true);
             setSelectedAnswer('');
-            setSeconds(30);
+            setSeconds(15);
         });
-    
-        socket.on('endQuiz', (leaderboard) => {
-            setShowResult(true);
-            setLeader(leaderboard);
-            setSelectedAnswer('');
-            setQuizStarted(false);
-            socket.emit('requestUserStats', socket.id);
-        });
-    
-        socket.on('resetQuiz', () => {
-            navigate('#')
+
+        socket.on('userList', (users) => {
+            setLeaders(users);
         })
 
-        socket.on('userStats', (user) => {
+        socket.on('endQuiz', (user) => {
+            setShowResult(true);
             setInfoUser(user);
-        })
+            setSelectedAnswer('');
+            setQuizStarted(false);
+            socket.emit('requestTop5');
+        });
+
+        socket.on('resetQuiz', () => {
+            navigate('/');
+        });
 
         return () => {
             socket.off('newQuestion');
             socket.off('endQuiz');
             socket.off('resetQuiz');
-            socket.off('userStats');
+            socket.off('userList')
         };
-    }, []);
+    }, [navigate]);
 
     useEffect(() => {
         let interval: NodeJS.Timeout;
@@ -66,7 +67,7 @@ const Client = () => {
                 }
             }, 1000);
         }
-    
+
         return () => clearInterval(interval);
     }, [quizStarted, seconds]);
 
@@ -76,11 +77,11 @@ const Client = () => {
     };
 
     const handleTimeout = () => {
-        if(selectedAnswer.length > 0) return null;
+        if (selectedAnswer.length > 0) return null;
         setSelectedAnswer('');
         socket.emit('answer', { answer: '', userId: socket.id });
     };
-    
+
     return (
         <section
             style={{

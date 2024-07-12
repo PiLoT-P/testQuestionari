@@ -9,16 +9,22 @@ const DashBoard = () => {
   const [topPlayers, setTopPlayers] = useState<IUser[]>([])
   const [isEnd, setIsEnd] = useState<boolean>(false);
 
-  useEffect(() => {
-    socket.on('newQuestion', () => {
-      setQuizStarted(true)
+useEffect(() => {
+    
+    socket.on('answer', () => {
+      console.log('start');
+      setQuizStarted(true);
+    });
+
+    socket.on('userList', () => {
+      setQuizStarted(true);
       socket.emit('requestTop5')
       setIsEnd(false)
     })
 
     socket.on('endQuiz', leaders => {
-      setTopPlayers(leaders)
-      setIsEnd(true);
+        setTopPlayers(leaders)
+        setIsEnd(true);
     })
 
     socket.on('top5', (leaders: IUser[]) => {
@@ -26,15 +32,16 @@ const DashBoard = () => {
     })
 
     socket.on('resetQuiz', () => {
-      setQuizStarted(false)
-      setTopPlayers([])
-      setIsEnd(false);
+        console.log('reset')
+        setQuizStarted(false)
+        setTopPlayers([])
+        setIsEnd(false);
     })
 
     return () => {
-      socket.off('top5')
-      socket.off('newQuestion')
-      socket.off('endQuiz')
+        socket.off('top5')
+        socket.off('newQuestion')
+        socket.off('endQuiz')
     }
   }, [])
 
@@ -50,25 +57,14 @@ const DashBoard = () => {
         color: '#3E5871',
       }}
     >
-      {!quizStarted ? (
-        <Loader />
-      ) : (
-        <LeadersList
-            isEnd={isEnd}
-            dataList={topPlayers}
-        />
-        // <div className={s.container}>
-        //   <div className={s.logo_block}>
-        //     <img
-        //       className={s.logo_image}
-        //       width={200}
-        //       src={logoSrc}
-        //       alt='Logo'
-        //     />
-        //   </div>
-        //   <Result data={topPlayers} />
-        // </div>
-      )}
+        {!quizStarted ? (
+            <Loader />
+        ) : (
+            <LeadersList
+                isEnd={isEnd}
+                dataList={topPlayers}
+            />
+        )}
     </section>
   )
 }
