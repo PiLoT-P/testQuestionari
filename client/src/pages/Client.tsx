@@ -1,11 +1,11 @@
-import Loader from "@src/components/loader/Loader";
-import PlayerInfo from "@src/components/playerInfo/PlayerInfo";
-import Question from "@src/components/question/Question";
-import Result from "@src/components/result/Result";
-import { IUser } from "@src/lib/interfaces/interfaces";
-import socket from "@src/socket";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import Loader from "@src/components/loader/Loader"
+import PlayerInfo from "@src/components/playerInfo/PlayerInfo"
+import Question from "@src/components/question/Question"
+import Result from "@src/components/result/Result"
+import { IUser } from "@src/lib/interfaces/interfaces"
+import socket from "@src/socket"
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const Client = () => {
     const [currentQuestion, setCurrentQuestion] = useState('');
@@ -38,7 +38,7 @@ const Client = () => {
         });
     
         socket.on('resetQuiz', () => {
-            navigate('/')
+            navigate('#')
         })
 
         socket.on('userStats', (user) => {

@@ -1,8 +1,8 @@
-import { FormEvent, useState } from "react";
-import socket from '@src/socket';
-import { useNavigate } from "react-router-dom";
-import logoSrc from '@src/assets/bertaLogoForTest.png';
-import s from './Join.module.scss';
+import logoSrc from '@src/assets/bertaLogoForTest.png'
+import socket from '@src/socket'
+import { FormEvent, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import s from './Join.module.scss'
 
 
 const Join = () => {
@@ -14,10 +14,10 @@ const Join = () => {
 
         if(userName.length > 0) {
             if(userName.toLocaleLowerCase() === 'admin'){
-                navigate('admin')
+                navigate('/admin')
             }else{
                 socket.emit('join', userName);
-                navigate('client')
+                navigate('/client')
             }
         }
     }
