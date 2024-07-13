@@ -63,6 +63,7 @@ function endQuizForUser(userId) {
     io.to(userId).emit('endQuiz', user);
   }
   io.emit('userList', users.sort((a, b) => b.score - a.score));
+  io.emit('endQuizTop', users.sort((a, b) => b.score - a.score).slice(0, 5))
 }
 
 function sendNextQuestion(userId) {
@@ -161,10 +162,9 @@ io.on('connection', (socket) => {
   });
 
   socket.on('requestTop5', () => {
-    leaderboard = [...users];
-    leaderboard.sort((a, b) => b.score - a.score).slice(0, 5);
+    const newLeaderboard = [...users];
 
-    io.emit('top5', leaderboard);
+    io.emit('top5', newLeaderboard.sort((a, b) => b.score - a.score).slice(0, 5));
   })
 
   socket.on('requestUserStats', (userId) => {

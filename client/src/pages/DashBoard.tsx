@@ -19,12 +19,12 @@ useEffect(() => {
     socket.on('userList', () => {
       setQuizStarted(true);
       socket.emit('requestTop5')
-      setIsEnd(false)
     })
 
-    socket.on('endQuiz', leaders => {
-        setTopPlayers(leaders)
+    socket.on('endQuizTop', (topUsers) => {
         setIsEnd(true);
+        setTopPlayers(topUsers);
+        console.log('end');
     })
 
     socket.on('top5', (leaders: IUser[]) => {
@@ -44,6 +44,10 @@ useEffect(() => {
         socket.off('endQuiz')
     }
   }, [])
+
+  useEffect(() => {
+    console.log('top', topPlayers)
+  }, [topPlayers])
 
   return (
     <section

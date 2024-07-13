@@ -1,4 +1,3 @@
-import QuestionAdmin from "@src/components/questionAdmin/QuestionAdmin"
 import Result from "@src/components/result/Result"
 import StartEventAdmin from "@src/components/startEventAdmin/StartEventAdmin"
 import UsetListAdmin from "@src/components/usersList/UserListAdmin"
@@ -8,7 +7,6 @@ import { useEffect, useState } from "react"
 
 const Admin = () => {
     const [users, setUsers] = useState<IUser[]>([]);
-    const [currentQuestion, setCurrentQuestion] = useState<string>('');
     const [startEvent, setStartEvet] = useState<boolean>(false);
     const [leaders, setLeaders] = useState<IUser[]>([]);
 
@@ -21,13 +19,11 @@ const Admin = () => {
             setUsers(userList);
         })
 
-        socket.on('newQuestion', (question) => {
-            setCurrentQuestion(question.question);
+        socket.on('newQuestion', () => {
             setStartEvet(true);
         });
 
         socket.on('endQuiz', (leaders) => {
-            setCurrentQuestion('');
             setLeaders(leaders);
             setStartEvet(false);
         });
@@ -59,9 +55,7 @@ const Admin = () => {
             <UsetListAdmin
                 dataList={users}
             />
-            <QuestionAdmin
-                text={currentQuestion}
-            />
+            {/* <Qus */}
             {(leaders.length > 0) &&
                 <Result
                     data={leaders}
