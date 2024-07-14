@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react'
 
 const DashBoard = () => {
   const [quizStarted, setQuizStarted] = useState<boolean>(false)
-  const [topPlayers, setTopPlayers] = useState<IUser[]>([])
+  const [topPlayers, setTopPlayers] = useState<IUser[]>([]);
+  const [listForEnd, setListForEnd] = useState<IUser[]>([]);
   const [isEnd, setIsEnd] = useState<boolean>(false);
 
 useEffect(() => {
@@ -14,6 +15,7 @@ useEffect(() => {
     socket.on('answer', () => {
       console.log('start');
       setQuizStarted(true);
+      setIsEnd(false)
     });
 
     socket.on('userList', () => {
@@ -23,7 +25,7 @@ useEffect(() => {
 
     socket.on('endQuizTop', (topUsers) => {
         setIsEnd(true);
-        setTopPlayers(topUsers);
+        setListForEnd(topUsers);
         console.log('end');
     })
 
@@ -34,7 +36,8 @@ useEffect(() => {
     socket.on('resetQuiz', () => {
         console.log('reset')
         setQuizStarted(false)
-        setTopPlayers([])
+        setTopPlayers([]);
+        setListForEnd([]);
         setIsEnd(false);
     })
 
@@ -66,7 +69,7 @@ useEffect(() => {
         ) : (
             <LeadersList
                 isEnd={isEnd}
-                dataList={topPlayers}
+                dataList={isEnd ? listForEnd : topPlayers}
             />
         )}
     </section>
