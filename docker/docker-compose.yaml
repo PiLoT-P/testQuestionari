@@ -9,19 +9,8 @@ services:
       context: ../server
       dockerfile: ../docker/build/api.dockerfile
     ports:
-      - "4000:4000"
+      - "9000:4000"
     labels:
       - "traefik.docker.network=traefik"
       - "traefik.enable.true"
       - "traefik.http.routers.quiz-client.rule=Host(`quiz.berta.ua`)"
-    
-  client:
-    build:
-      context: ../client
-      dockerfile: ../docker/build/client.dockerfile
-    ports:
-      - "8080:8080"
-    labels:
-      - "traefik.docker.network=traefik"
-      - "traefik.enable.true"
-      - "traefik.http.routers.quiz-api.rule=Host(`quiz.berta.ua`)"
