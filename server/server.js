@@ -176,6 +176,7 @@ function resetQuiz() {
   users = [];
   leaderboard = [];
   io.emit('resetQuiz');
+  saveUsers();
 }
 
 io.on('connection', (socket) => {
@@ -226,9 +227,9 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    users = users.filter(user => user.id !== socket.id);
-    io.emit('userList', users);
-    saveUsers();
+    // users = users.filter(user => user.id !== socket.id);
+    // io.emit('userList', users);
+    // saveUsers();
   });
 
   socket.on('requestTop5', () => {
