@@ -22,6 +22,10 @@ const Client = () => {
     useEffect(() => {
         socket.emit('isStartedEvent', socket.id);
 
+        if(!socket.id){
+            navigate('/')
+        };
+
         socket.on('newQuestion', (question) => {
             console.log('question', question);
             setCurrentQuestion(question.question);
