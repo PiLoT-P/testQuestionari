@@ -20,6 +20,8 @@ const Client = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        socket.emit('isStartedEvent', socket.id);
+
         socket.on('newQuestion', (question) => {
             console.log('question', question);
             setCurrentQuestion(question.question);
@@ -46,11 +48,22 @@ const Client = () => {
             navigate('/');
         });
 
+        socket.on('quizAlreadyStarted', () => {
+            // socket.emit
+        })
+
+        socket.on('userAlready', () => {
+            navigate('/');
+        })
+
         return () => {
             socket.off('newQuestion');
             socket.off('endQuiz');
             socket.off('resetQuiz');
-            socket.off('userList')
+            socket.off('userList');
+            socket.off('userJoined');
+            socket.off('userAlready');
+            socket.off('quizAlreadyStarted');
         };
     }, [navigate]);
 

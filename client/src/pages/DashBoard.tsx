@@ -10,46 +10,48 @@ const DashBoard = () => {
   const [listForEnd, setListForEnd] = useState<IUser[]>([]);
   const [isEnd, setIsEnd] = useState<boolean>(false);
 
-useEffect(() => {
-    
+  useEffect(() => {
     socket.on('answer', () => {
-      console.log('start');
       setQuizStarted(true);
-      setIsEnd(false)
+      setIsEnd(false);
+      console.log('Quiz started:', quizStarted, 'Is end:', isEnd);
     });
-
-    socket.on('userList', () => {
+  
+    socket.on('userList', (users) => {
       setQuizStarted(true);
-      socket.emit('requestTop5')
-    })
-
+      console.log('User list received:', users);
+      socket.emit('requestTop5');
+    });
+  
     socket.on('endQuizTop', (topUsers) => {
-        setIsEnd(true);
-        setListForEnd(topUsers);
-        console.log('end');
-    })
-
+      setIsEnd(true);
+      setListForEnd(topUsers);
+      console.log('Quiz ended. Top users:', topUsers);
+    });
+  
     socket.on('top5', (leaders: IUser[]) => {
-      setTopPlayers(leaders)
-    })
-
+      setTopPlayers(leaders);
+      console.log('Top 5 players:', leaders);
+    });
+  
     socket.on('resetQuiz', () => {
-        console.log('reset')
-        setQuizStarted(false)
-        setTopPlayers([]);
-        setListForEnd([]);
-        setIsEnd(false);
-    })
-
+      console.log('Quiz reset');
+      setQuizStarted(false);
+      setTopPlayers([]);
+      setListForEnd([]);
+      setIsEnd(false);
+    });
+  
     return () => {
-        socket.off('top5')
-        socket.off('newQuestion')
-        socket.off('endQuiz')
-    }
-  }, [])
+      socket.off('top5');
+      socket.off('newQuestion');
+      socket.off('endQuiz');
+    };
+  }, []);
 
   useEffect(() => {
-    console.log('top', topPlayers)
+    console.log('top', topPlayers, 'is end', isEnd)
+
   }, [topPlayers])
 
   return (

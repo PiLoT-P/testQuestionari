@@ -121,6 +121,7 @@ const questions = [
 
 let users = [];
 let leaderboard = [];
+let quezIsStart = false;
 
 function saveUsers() {
   fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2), 'utf8');
@@ -133,7 +134,9 @@ function endQuizForUser(userId) {
     io.to(userId).emit('endQuiz', user);
   }
   io.emit('userList', users.sort((a, b) => b.score - a.score));
-  io.emit('endQuizTop', users.sort((a, b) => b.score - a.score).slice(0, 5))
+  if(users.every(user => user.finished)){
+    io.emit('endQuizTop', users.sort((a, b) => b.score - a.score).slice(0, 5))
+  }
 }
 
 function sendNextQuestion(userId) {
@@ -166,6 +169,7 @@ function checkAnswer(userId, answer) {
     }
 
     user.answer = answer;
+    console.log('User list before emitting:', users);
     io.emit('userList', users);
     user.answer = undefined;
     sendNextQuestion(userId);
@@ -194,7 +198,10 @@ io.on('connection', (socket) => {
         finished: false
       });
       io.emit('userList', users);
+      io.to(socket.id).emit('userJoined', quezIsStart);
       saveUsers();
+    }else{
+      io.to(socket.id).emit('userAlready');
     }
   });
 
@@ -203,8 +210,16 @@ io.on('connection', (socket) => {
     socket.emit('userList', users);
   });
 
+  socket.on('isStartedEvent', (userId) => {
+    if(quezIsStart){
+      io.to(userId).emit('quizAlreadyStarted');
+      sendNextQuestion(userId);
+    }
+  })
+
   socket.on('startQuiz', () => {
-    console.log('start', users.length)
+    console.log('start', users.length);
+    quezIsStart = true;
     users.forEach(user => {
       user.currentQuestionIndex = -1;
       user.score = 0;

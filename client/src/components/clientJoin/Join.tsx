@@ -1,6 +1,6 @@
 import logoSrc from '@src/assets/bertaLogoForTest.png'
 import socket from '@src/socket'
-import { FormEvent, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import s from './Join.module.scss'
 
@@ -17,10 +17,19 @@ const Join = () => {
                 navigate('/admin')
             }else{
                 socket.emit('join', userName);
-                navigate('/client')
             }
         }
     }
+
+    useEffect(() => {
+        socket.on('userJoined', () => {
+            navigate('/client')
+        })
+
+        return () => {
+            socket.off('userJoined');
+        }
+    },[])
 
     return (
         <section className={s.container}>
