@@ -135,6 +135,7 @@ function endQuizForUser(userId) {
   }
   io.emit('userList', users.sort((a, b) => b.score - a.score));
   if(users.every(user => user.finished)){
+    quezIsStart = false;
     io.emit('endQuizTop', users.sort((a, b) => b.score - a.score).slice(0, 5))
   }
 }
@@ -180,6 +181,7 @@ function resetQuiz() {
   users = [];
   leaderboard = [];
   io.emit('resetQuiz');
+  quezIsStart = false;
   saveUsers();
 }
 

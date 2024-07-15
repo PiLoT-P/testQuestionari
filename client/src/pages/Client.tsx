@@ -48,10 +48,6 @@ const Client = () => {
             navigate('/');
         });
 
-        socket.on('quizAlreadyStarted', () => {
-            // socket.emit
-        })
-
         socket.on('userAlready', () => {
             navigate('/');
         })
@@ -63,7 +59,6 @@ const Client = () => {
             socket.off('userList');
             socket.off('userJoined');
             socket.off('userAlready');
-            socket.off('quizAlreadyStarted');
         };
     }, [navigate]);
 
