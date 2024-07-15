@@ -8,7 +8,6 @@ import { useEffect, useState } from "react"
 const Admin = () => {
     const [users, setUsers] = useState<IUser[]>([]);
     const [startEvent, setStartEvet] = useState<boolean>(false);
-    const [leaders, setLeaders] = useState<IUser[]>([]);
 
     useEffect(() => {
         socket.on('userList', (userList) => {
@@ -23,8 +22,7 @@ const Admin = () => {
             setStartEvet(true);
         });
 
-        socket.on('endQuiz', (leaders) => {
-            setLeaders(leaders);
+        socket.on('endQuizTopOnlySorted', () => {
             setStartEvet(false);
         });
     
@@ -34,7 +32,7 @@ const Admin = () => {
             socket.off('userList');
             socket.off('requestUserList');
             socket.off('newQuestion');
-            socket.off('endQuiz');
+            socket.off('endQuizTopOnlySorted');
         };
     }, []);
 
@@ -56,9 +54,9 @@ const Admin = () => {
                 dataList={users}
             />
             {/* <Qus */}
-            {(leaders.length > 0) &&
+            {(users.length > 0) &&
                 <Result
-                    data={leaders}
+                    data={users.sort((a, b) => b.score - a.score)}
                 />
             }
             <StartEventAdmin

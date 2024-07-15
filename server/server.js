@@ -137,6 +137,7 @@ function endQuizForUser(userId) {
   if(users.every(user => user.finished)){
     quezIsStart = false;
     io.emit('endQuizTop', users.sort((a, b) => b.score - a.score).slice(0, 5))
+    io.emit('endQuizTopOnlySorted', users.sort((a, b) => b.score - a.score))
   }
 }
 

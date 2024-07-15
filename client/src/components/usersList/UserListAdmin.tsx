@@ -19,6 +19,9 @@ const UsetListAdmin = ({
                         <li
                             key={index}
                             className={s.item}
+                            style={{
+                                backgroundColor: user.finished ? 'green' : '',
+                            }}
                         >
                             <p>Ім'я:  <span className={s.current_text}>{user.name}</span></p>
                             <p>Рахунок:  <span className={s.current_text}>{user.score}</span></p>
